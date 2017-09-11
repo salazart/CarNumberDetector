@@ -14,16 +14,8 @@
     </form>
 </div>
 
-<div>
-    <img th:src="@{1.png}"/>
-</div>
-
-<div>
-    <ul>
-        <li th:each="file : ${files}">
-            <a th:href="${file}" th:text="${file}" />
-        </li>
-    </ul>
+<div th:if="${fileName}">
+    <img th:src="@{${fileName}}"/>
 </div>
 
 </body>

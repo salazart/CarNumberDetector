@@ -22,13 +22,14 @@ import java.nio.file.StandardCopyOption;
  */
 @Controller
 public class FileUploadController {
+    private String rootFolder = "src/main/resources/static/";
     private String location = "upload-dir";
 
     private Path rootLocation;
     private String fileName;
 
     public FileUploadController() {
-        this.rootLocation = Paths.get(location);
+        this.rootLocation = Paths.get(rootFolder + location);
         try {
             FileSystemUtils.deleteRecursively(rootLocation.toFile());
             Files.createDirectories(rootLocation);
@@ -77,13 +78,13 @@ public class FileUploadController {
                     StandardCopyOption.REPLACE_EXISTING);
         }
         catch (IOException e) {
-            System.out.println("Failed to store file " + this.fileName + e.getMessage());
+            System.out.println("Failed to store file " + this.fileName + " " + e.getMessage());
         }
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        redirectAttributes.addFlashAttribute("fileName", File.separator + rootLocation + File.separator + fileName);
+        redirectAttributes.addFlashAttribute("fileName", File.separator + location + File.separator + fileName);
 //        return "redirect:/";
         return "redirect:/";
 
